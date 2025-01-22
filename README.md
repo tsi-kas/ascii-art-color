@@ -10,7 +10,8 @@ Usage:
 `go run . [OPTION] [STRING]`
 Example:
 `go run . --color=red "something"`
-`go run . --color=red some "something"`
+`go run . --color=yellow some "something"`
+`go run . --color=blue some "something" thinkertoy`
 
 ### ascii-art-reverse
 
