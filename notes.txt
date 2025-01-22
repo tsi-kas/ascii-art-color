@@ -1,0 +1,127 @@
+main.go
+
+func main() {
+
+If the length of the arguments is less than or equal to 1, then this 
+is not sufficient for executing the generate ascii functions. So return.
+
+If the first argument has the prefix "--", then check for the various
+banners that exist: "--reverse", "--color", "--output".
+
+If these banners exist but the syntax is wrong, print the instructions 
+to the terminal.
+
+Define the flags. Parse the flags.
+
+Define args []string to store the arguments from the terminal that we want.
+
+Define the font variable default.
+Check for font tag at os.Args[len(os.Args)-1]
+
+If it is "thinkertoy" or "shadow" or "standard", then set the args []string
+variable as os.Args[1:len(os.Args)-1] to remove the font tag from the words that
+will be processed for ascii art generation.
+
+If there is no font tag, then args = os.Args[1:].
+
+Create a result string variable.
+
+If there is a reverse flag, then perform reverse.ProcessReverse(arg[0], font).
+arg[0] is where the name of the file with the asciitext is stored.
+The font should always be standard.txt by default. If the user specifies a 
+different font, reverse.ProcessReverse() will fail.
+
+
+If there is a color flag, then check how many arguments there are in
+args []string. We check because of the case where the 1st arg is for setting
+with characters will show with colour, and the 2nd arg is the phrase.
+Or that there is no colour set arg so the 1st arg is the phrase.
+
+We want to get the color information before we send it to art.go. In art.go,
+we need to be able to change the printing color midway through the process.
+We should probably make a new art.go specifically for color.
+
+We should separate the "\n" into []string, so that we can do the process 
+normally for each string and still get the "\n" to print correctly.
+
+
+
+}
+
+
+
+reverse.go
+
+func ProcessReverse(arg string) {
+
+Define the file path of the ascii art text file from the arguments. If it is
+called "example..." then make the path = "examples/", so it will be looked for
+in the "examples/" folder, where the example files have been saved.
+
+If the name is not "example..." then make path = "" so it will be looked for
+in the root folder.
+
+Read the contents of the file name given in the arguments args[0]. Split up
+name to separate the flag --reverse= from the name example00.txt.
+
+Format the contents of this file into vertical reading, instead of horizontal
+reading.
+
+Read the contents of the font file. Also format the contents of this file into
+vertical reading.
+
+
+func HorizontaltoVertical(text string) map[int]string {
+
+We need these to be vertical reading so that we can recognise the characters,
+as the way they appear in the example file and the font file will now be equal.
+
+abcd
+efgh
+Instead of reading this as "abcdefgh", we will read it as "aebfcgdh".
+
+  0 1 2 3 β
+0 a b c d
+1 e f g h
+2 i j k l
+3 m n o p
+α
+
+Instead of (α,β) for loops:
+for α {
+    for β {
+    }
+}
+We want (β, α) for loops:
+for β {
+    for α {
+    }
+}
+}
+
+We also need to take into account that for the font file, we want to do the 
+characters in order. We can't just vertically read the entire document, as we 
+will get the first line of the letter a then b then c. 
+
+We want the first line of the letter a, then the second line of the letter a etc.
+And THEN we want the first line of letter b. 
+
+This means we have 3 for loops. The first jumps in steps of 9, as the start of 
+the characters in the font file are 9 lines apart. The second goes horizontally 
+through the line (the width of the character), and the last goes vertically down 
+8 lines (the height of the character).
+
+We return this as a map[int]string.
+
+func FindAscii(asciiFormat, fontFormat map[int]string) string {
+
+This uses CutPrefix to find the ascii art character from the fontFormat map. If
+it finds it, it will be removed from asciiFormat, and we find the exact letter 
+it is because we indexed the fontFormat map. Now we just need to add 32 to get 
+the correct rune.
+
+}
+
+
+
+
